@@ -7,7 +7,7 @@ func main(){
 	target := 7
 	fmt.Println(combinationSum(candidates,target))
 }
-
+//這題跟coin problem有點類似，但不可用coin problem方式去解，不然會有重複的子集
 func combinationSum(candidates []int, target int) [][]int {
 	result := [][]int{}
 	dfs(candidates, target, 0, &[]int{}, 0, &result)

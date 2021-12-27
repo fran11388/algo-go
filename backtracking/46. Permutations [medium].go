@@ -7,36 +7,33 @@ func main() {
 }
 
 func permute(nums []int) [][]int {
-	return permuteByBacktrack(nums)
-}
-
-func permuteByBacktrack(nums []int) [][]int {
 	perms := []int{}
-	result := [][]int{}
 	used := make([]bool, len(nums))
-	backtrack(nums, &perms, &result, &used)
+	result := [][]int{}
+	backtrack(nums, &perms, used, &result)
 	return result
 }
 
-func backtrack(nums []int, perms *[]int, result *[][]int, used *[]bool) {
-	//goal
+func backtrack(nums []int, perms *[]int, used []bool, result *[][]int) {
 	if len(*perms) == len(nums) {
-		*result = append(*result, append([]int{}, *perms...))
+		res := make([]int, len(*perms))
+		copy(res, *perms)
+		*result = append(*result, res)
+		return
 	}
 
-	u := *used
-	for i, _ := range nums {
-		if u[i] == true {
+	for i, n := range nums {
+		if used[i] {
 			continue
 		}
-		//make choices
-		num := nums[i]
-		*perms = append(*perms, num)
-		u[i] = true
-		backtrack(nums, perms, result, used)
+
+		//make choice
+		used[i] = true
+		*perms = append(*perms, n)
+		backtrack(nums, perms, used, result)
+
 		//undo choice
-		p := *perms
-		*perms = p[:len(p)-1]
-		u[i] = false
+		used[i] = false
+		*perms = (*perms)[:len(*perms)-1] //remove last element
 	}
 }
