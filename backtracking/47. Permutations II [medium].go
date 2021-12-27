@@ -7,27 +7,41 @@ func main() {
 }
 
 func permuteUnique(nums []int) [][]int {
-	if len(nums) == 1 {
-		return [][]int{{nums[0]}}
-	}
-	result := [][]int{}
-
-	//蝶帶每個nums中的數字  但重複的不處理
-	seen := make(map[int]bool)
-	for i, _ := range nums {
-		takenNum := nums[i]
-		if _, ok := seen[takenNum]; ok {
-			continue
-		}
-		seen[takenNum] = true
-		leftPart := append([]int{}, nums[0:i]...)
-		perms := permuteUnique(append(leftPart, nums[i+1:]...))
-		for _, perm := range perms {
-			newPerm := []int{takenNum}
-			newPerm = append(newPerm, perm...)
-			result = append(result, newPerm)
-		}
-	}
+	result:=[][]int{}
+	used:=make([]bool,len(nums))
+	backtrack(nums,&[]int{},used,&result)
 	return result
 
+}
+
+func backtrack(nums []int ,perms *[]int,used[]bool,result *[][]int){
+	if len(*perms)==len(nums){
+		newperms:=make([]int,len(*perms))
+		copy(newperms,*perms)
+		*result=append(*result,newperms)
+		return
+	}
+
+	choosed:=map[int]bool{} //紀錄當前位置放過的數 確保不重複
+	for i,n:=range nums{
+		if _,ok:=choosed[n];ok{
+			continue
+		}
+
+		if used[i]{ //已被使用的不拿
+			continue
+		}
+
+
+		choosed[n]=true
+
+		//make choice
+		used[i]=true
+		*perms=append(*perms,n)
+		backtrack(nums,perms,used,result)
+
+		//undo choice
+		used[i]=false
+		*perms=(*perms)[:len(*perms)-1]
+	}
 }
