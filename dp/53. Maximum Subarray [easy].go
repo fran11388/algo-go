@@ -3,13 +3,14 @@ package main
 import "fmt"
 
 func main(){
-	nums:=[]int{-2,1,-3,4,-1,2,1,-5,4}
+	nums:=[]int{1,2,-100,-99}
 	fmt.Println(maxSubArray(nums))
 }
 
 
 func maxSubArray(nums []int) int {
 	//宣告一個dp table用來存放到每一位置為止能形成的 Maximum Subarray
+	//(從頭累加到當前位置，或從當前位置開始)
 	table:=make([]int,len(nums))
 	table[0]=nums[0]
 	maxsum:=nums[0]
