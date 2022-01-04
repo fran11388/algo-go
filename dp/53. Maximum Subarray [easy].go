@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main(){
-	nums:=[]int{1,2,-100,-99}
+	nums:=[]int{1,2,-99,-99}
 	fmt.Println(maxSubArray(nums))
 }
 
