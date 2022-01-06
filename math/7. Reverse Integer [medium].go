@@ -16,7 +16,7 @@ func reverse(x int) int {
 	for x!=0{
 		pop:=x%10
 		x=x/10
-
+	//int32  : -2147483648 ~ 2147483647
 		if res>math.MaxInt32/10||(res==math.MaxInt32/10&&pop>7){
 			return 0
 		}
