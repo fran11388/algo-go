@@ -15,6 +15,8 @@ func canPartition(nums []int) bool {
 	//return canPartitionByBruteForce(nums)
 }
 
+
+//逐漸考慮每一數，並組出新的數判斷能不能組合出target
 func canPartitionByDP(nums []int) bool {
 	sum := 0
 	for _, n := range nums {
