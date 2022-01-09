@@ -18,12 +18,10 @@ func subarraySum(nums []int, k int) int {
 func subarraySumPrefixSumHt(nums []int, k int) int {
 	sum:=0
 	result:=0
-	ht:=make(map[int]int)
+	ht:=make(map[int]int)//prefixSum count
 	ht[0]=1
 	for i:=0;i<len(nums);i++{
 		sum+=nums[i]
-
-		//耖 這邊的城市要先執行
 		if _,ok:=ht[sum-k];ok{
 			result+=ht[sum-k]
 		}
@@ -33,8 +31,6 @@ func subarraySumPrefixSumHt(nums []int, k int) int {
 		}else{
 			ht[sum]=1
 		}
-
-
 	}
 
 	return result
