@@ -29,7 +29,7 @@ func (l *LRUCache) prepend(n *Node) {
 	n.Prev = l.dummyHead
 	n.Next = l.dummyHead.Next
 
-	//注意這邊很重要，要先暫存起來，才不會指錯
+	//注意這邊很重要，要先暫存起來，才不會指錯(如果這邊不存tmp，也可以先將dummyHead的next的prev先指到新結點，然後才更新dummyHead的next到新節點)
 	dummyheadNextTmp:=l.dummyHead.Next
 	l.dummyHead.Next = n
 	dummyheadNextTmp.Prev = n
