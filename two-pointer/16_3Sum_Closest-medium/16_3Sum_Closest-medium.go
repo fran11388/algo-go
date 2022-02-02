@@ -1,4 +1,4 @@
-package main
+package _3Sum_Closest
 
 import (
 	"math"
@@ -23,12 +23,12 @@ func threeSumClosestByTwoPointer(nums []int, target int) int {
 				return sum
 			}else if sum >target {
 				right--
-				if abs(sum-target)<abs(diff){
+				if abs(sum-target)< abs(diff){
 					diff=sum-target
 				}
 			}else{
 				left++
-				if abs(sum-target)<abs(diff){
+				if abs(sum-target)< abs(diff){
 					diff=sum-target
 				}
 			}
