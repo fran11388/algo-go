@@ -10,7 +10,26 @@ func canJump(nums []int) bool {
 	return canJumpByTable(nums)
 }
 
-func canJumpHelp(nums []int, begin int, ht map[int]bool) bool {
+//從最後位置依序往左看，看能不能跳掉最後；若可以，更新last position，繼續往左看能不能跳到last position；
+//若不行，就不更新last position，一樣繼續往左看能不能跳到last position
+func canJumpByGreedy(nums []int) bool {
+	if len(nums)<2{
+		return true
+	}
+	lastPos:=len(nums)-1
+	for i:=len(nums)-2;i>=0;i--{
+		j:=nums[i]
+		if i+j>=lastPos{
+			lastPos=i
+			if i==0{
+				return true
+			}
+		}
+	}
+	return false
+}
+
+func canJumpRecu(nums []int, begin int, ht map[int]bool) bool {
 	if begin == len(nums)-1 {
 		return true
 	}
@@ -27,7 +46,7 @@ func canJumpHelp(nums []int, begin int, ht map[int]bool) bool {
 				return true
 			}
 		}else{
-			canjump := canJumpHelp(nums, begin+i, ht)
+			canjump := canJumpRecu(nums, begin+i, ht)
 			ht[begin+i] = canjump
 			if canjump {
 				ht[begin] = true
