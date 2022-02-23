@@ -6,46 +6,36 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
+//宣告一變數追蹤最長的diameter
+//對每個節點考慮左右的longestPath，並將其連起來，看看是否大於diameter
+//因為在計算longestPath時，就會需要考慮左右，所以這時就可以同時更新diameter
 func diameterOfBinaryTree(root *TreeNode) int {
-	info:=getInfo(root)
-	return info.Diameter
+	diameter:=0
+	longestPath(root,&diameter)
+	return diameter
 }
 
-func getHeight(root *TreeNode) int {
-	if root == nil {
-		return -1 //這邊回傳-1是為了方便計算，這樣算diameter時可以直接+1，若是null回傳-1可直接抵銷
-	}
-	leftH := getHeight(root.Left)
-	rightH := getHeight(root.Right)
-	return 1 + getMAx(leftH, rightH)
-}
-
-func getMAx(a ...int) int {
-	max:=a[0]
-	for _,v:=range a{
-		if v>max{
-			max=v
-		}
-	}
-	return max
-}
-
-type NodeInfo struct{
-	Height int
-	Diameter int
-}
-
-func getInfo(root *TreeNode)*NodeInfo{
-	info:=&NodeInfo{Height: -1}
+func longestPath(root *TreeNode,diameter *int ) int {
 	if root==nil{
-		return info
+		return -1  //空節點設為-1，當一節點左右子樹都空 +1後剛好會是0
 	}
 
-	leftInfo:=getInfo(root.Left)
-	rightInfo:=getInfo(root.Right)
-	info.Height=1+getMAx(leftInfo.Height,rightInfo.Height)
-	diameter:=2+leftInfo.Height+rightInfo.Height
+	left:=longestPath(root.Left,diameter)
+	right:=longestPath(root.Right,diameter)
+	m:=getMax(left,right)
 
-	info.Diameter=getMAx(diameter,leftInfo.Diameter,rightInfo.Diameter)
-	return info
+	//因為左右子樹的longestPath都有，可以同時把他們連起來看看有沒有大於diameter
+	d:=2+left+right
+	if d>*diameter{
+		*diameter=d
+	}
+
+	return m+1//增加高度1
+}
+
+func getMax(a,b int)int{
+	if a>b{
+		return a
+	}
+	return b
 }
