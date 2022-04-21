@@ -10,6 +10,8 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
+//解法一
+//思路:dfs標記node parent, 從target本身做bfs, 直到k層
 func distanceK(root *TreeNode, target *TreeNode, k int) []int {
 	nodeParentMap := getNodeParentMap(root)
 
