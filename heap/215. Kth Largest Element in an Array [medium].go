@@ -10,7 +10,7 @@ func main() {
 	fmt.Println(findKthLargestByQuickSelect(nums, 2))
 }
 
-//kth largest會在n-k的位置(小到大)
+//kth largest會在n-k的位置(小到大) (n是從0開始)
 //不斷找pivot直到pivot位在n-k
 func findKthLargestByQuickSelect(nums []int, k int) int {
 	targetIdx := len(nums) - k
